@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import Form from "../components/Form";
 import List from "../components/List";
@@ -19,11 +20,28 @@ function App() {
     );
   }
 
+  function finalizarTarefa() {
+    if (selecionado) {
+      setTarefas((tarefasAnteriores) =>
+        tarefasAnteriores.map((tarefa) => {
+          if (tarefa.id === selecionado.id) {
+            return {
+              ...tarefa,
+              selecionado: false,
+              completado: true,
+            };
+          }
+          return tarefa;
+        })
+      );
+    }
+  }
+
   return (
     <div className={style.AppStyle}>
       <Form setTarefas={setTarefas} />
       <List tarefas={tarefas} selecionaTarefa={selecionaTarefa} />
-      <Timer />
+      <Timer selecionado={selecionado} finalizarTarefa={finalizarTarefa} />
     </div>
   );
 }
